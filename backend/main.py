@@ -5,7 +5,8 @@ from config import database_config
 app = FastAPI()
 
 origins = [
-    "https://localhost:5173"
+    "https://localhost:5173",
+    "http://localhost:5173",
 ]
 
 app.add_middleware(
