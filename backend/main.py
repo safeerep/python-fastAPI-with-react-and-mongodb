@@ -1,6 +1,7 @@
 from fastapi import FastAPI
 from fastapi.middleware.cors import CORSMiddleware
 from routers import todo_routes
+from config import database_config
 app = FastAPI()
 
 origins = [
