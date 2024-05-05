@@ -4,9 +4,9 @@ const TodoView = ({ todoList }: { todoList: ITodo[] }) => {
   return (
     <div>
       <ul>
-        {todoList.map((todo: ITodo) => (
-          <TodoItem todo={todo} />
-        ))}
+        {todoList &&
+          todoList?.length > 0 &&
+          todoList.map((todo: ITodo) => <TodoItem todo={todo} />)}
       </ul>
     </div>
   );
