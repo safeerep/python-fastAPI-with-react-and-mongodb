@@ -23,9 +23,9 @@ function App() {
 
   useEffect(() => {
     axios.get(`${BASE_URL}/get-todos`).then((res) => {
-      setTodoList(res.data);
+      setTodoList(res.data?.todos);
     });
-  });
+  }, [todoList?.length]);
 
   const addTodoHandler = () => {
     axios
