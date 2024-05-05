@@ -21,9 +21,14 @@ async def create_todo(todo):
     # converting ObjectId to string to avoid error
     # then, modifying the todo dictionary to include the _id field
     todo_dict['_id'] = str(result.inserted_id)
+    todos = []
+    async for doc in collection.find():
+        doc["_id"] = str(doc['_id'])
+        todos.append(doc)
     return ({
         "message": "successfully created new todo",
-        "todo": todo_dict
+        "todo": todo_dict,
+        "todos": todos
     })
 
 # to get a todo with specific title
@@ -70,7 +75,13 @@ async def remove_one_todo(title):
     )
     print(result)
     result["_id"] = str(result["_id"])
+    todos = []
+    async for doc in collection.find():
+        doc["_id"] = str(doc['_id'])
+        todos.append(doc)
+
     return ({
         "message": "successfully removed ",
-        "todo": result
+        "todo": result,
+        "todos": todos
     })
