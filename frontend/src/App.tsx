@@ -2,6 +2,7 @@ import { useEffect, useState } from "react";
 import TodoView from "./components/TodoView";
 import axios from "axios";
 import { BASE_URL } from "./constants";
+import toast, { Toaster } from "react-hot-toast";
 
 function App() {
   const [todoList, setTodoList] = useState([
@@ -22,10 +23,14 @@ function App() {
   const [desc, setDesc] = useState("");
 
   useEffect(() => {
+    fetchTodos()
+  }, []);
+
+  const fetchTodos = () => {
     axios.get(`${BASE_URL}/get-todos`).then((res) => {
       setTodoList(res.data?.todos);
     });
-  }, [todoList?.length]);
+  }
 
   const addTodoHandler = () => {
     axios
@@ -33,7 +38,12 @@ function App() {
         title: title,
         description: desc,
       })
-      .then((res) => console.log(res));
+      .then((res) => {
+        if(res) {
+          toast.success("successfully added new todo")
+          fetchTodos()
+        }
+      });
   };
   return (
     <>
@@ -69,13 +79,14 @@ function App() {
           </div>
           <h5 className="bg-black p-2 text-white mb-3">Your Tasks</h5>
           <div>
-            <TodoView todoList={todoList} />
+            <TodoView updateTodos={fetchTodos} todoList={todoList} />
           </div>
         </div>
         <h6 className="card text-dark bg-warning py-1 mb-0">
           Copyright 2024, All rights reserved &copy; safeerep
         </h6>
       </div>
+      <Toaster />
     </>
   );
 }
