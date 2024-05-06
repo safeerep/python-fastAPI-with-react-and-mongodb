@@ -40,6 +40,8 @@ function App() {
       })
       .then((res) => {
         if(res) {
+          setTitle("")
+          setDesc("")
           toast.success("successfully added new todo")
           fetchTodos()
         }
